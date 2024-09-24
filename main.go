@@ -2,37 +2,57 @@ package main
 
 import "fmt"
 
+// Define the Shape interface
+type Shape interface {
+	area() float64
+	perimeter() float64
+}
+
 // Define the Rectangle struct
 type Rectangle struct {
 	width, height float64
 }
 
-// Method to calculate area of the rectangle
+// Implement the Shape interface for Rectangle
 func (r Rectangle) area() float64 {
 	return r.width * r.height
 }
 
-// Method to calculate perimeter of the rectangle
 func (r Rectangle) perimeter() float64 {
 	return 2 * (r.width + r.height)
 }
 
-// Method with a pointer receiver to modify the rectangle
-func (r *Rectangle) resize(newWidth, newHeight float64) {
-	r.width = newWidth
-	r.height = newHeight
+// Define the Circle struct
+type Circle struct {
+	radius float64
+}
+
+// Implement the Shape interface for Circle
+func (c Circle) area() float64 {
+	return 3.14 * c.radius * c.radius
+}
+
+func (c Circle) perimeter() float64 {
+	return 2 * 3.14 * c.radius
+}
+
+// Function to print area and perimeter of a shape
+func printShapeDetails(s Shape) {
+	fmt.Println("Area:", s.area())
+	fmt.Println("Perimeter:", s.perimeter())
 }
 
 func main() {
-	// Create a new rectangle
+	// Create a rectangle and circle
 	rect := Rectangle{width: 10, height: 5}
+	circle := Circle{radius: 7}
 
-	// Calculate and display the area and perimeter
-	fmt.Println("Area:", rect.area())
-	fmt.Println("Perimeter:", rect.perimeter())
+	// Print details for the rectangle
+	fmt.Println("Rectangle details:")
+	printShapeDetails(rect)
 
-	// Modify the rectangle dimensions
-	rect.resize(20, 10)
-	fmt.Println("Resized Rectangle - Area:", rect.area())
-	fmt.Println("Resized Rectangle - Perimeter:", rect.perimeter())
+	// Print details for the circle
+	fmt.Println("Circle details:")
+	printShapeDetails(circle)
+
 }
