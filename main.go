@@ -3,35 +3,59 @@ package main
 import "fmt"
 
 func main() {
-	// Basic types
-	var a int = 10
-	var b float64 = 20.5
-	var c bool = true
-	var d string = "Hello World!"
+	// If-Else Statement
+	age := 18
 
-	// Composite types
-	arr := [3]int{1, 2, 3}
-	slice := []string{"apple", "banana", "cherry"}
-	m := map[string]int{"one": 1, "two": 2}
-
-	// Struct
-	type Person struct {
-		Name string
-		Age  int
+	if age < 18 {
+		fmt.Println("You are a minor.")
+	} else if age >= 18 && age < 65 {
+		fmt.Println("You are an adult.")
+	} else {
+		fmt.Println("You are a senior.")
 	}
-	p := Person{Name: "Kyel", Age: 23}
 
-	// Pointer
-	var ptr *int = &a
+	fmt.Println() // For better readability in output
 
-	fmt.Println("Integer:", a)
-	fmt.Println("Float:", b)
-	fmt.Println("Boolean:", c)
-	fmt.Println("String:", d)
-	fmt.Println("Array:", arr)
-	fmt.Println("Slice:", slice)
-	fmt.Println("Map:", m)
-	fmt.Println("Struct:", p)
-	fmt.Println("Pointer:", ptr)
+	// Switch Statement
+	day := 3
+
+	switch day {
+	case 1:
+		fmt.Println("Monday")
+	case 2:
+		fmt.Println("Tuesday")
+	case 3:
+		fmt.Println("Wednesday")
+	case 4:
+		fmt.Println("Thursday")
+	case 5:
+		fmt.Println("Friday")
+	}
+
+	fmt.Println() // For better readability in output
+
+	// For Loop
+	// Basic for loop
+	fmt.Println("Basic for loop:")
+	for i := 0; i < 5; i++ {
+		fmt.Println("Iteration:", i)
+	}
+
+	fmt.Println() // For better readability in output
+
+	// For loop with a condition
+	j := 0
+	fmt.Println("For loop with a condition:")
+	for j < 3 {
+		fmt.Println("Iteration:", j)
+		j++
+	}
+
+	// Infinite loop (be careful!)
+	// Uncomment the next lines to see it in action
+	// fmt.Println("This will run forever!")
+	// for {
+	//     fmt.Println("This will run forever!")
+	// }
 
 }
