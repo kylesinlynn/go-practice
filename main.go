@@ -1,58 +1,36 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"time"
+)
 
-// Define the Shape interface
-type Shape interface {
-	area() float64
-	perimeter() float64
+// Function to simulate a task and send data through a channel
+func task1(ch chan<- string) {
+	time.Sleep(2 * time.Second)
+	ch <- "Task 1 complete"
 }
 
-// Define the Rectangle struct
-type Rectangle struct {
-	width, height float64
-}
-
-// Implement the Shape interface for Rectangle
-func (r Rectangle) area() float64 {
-	return r.width * r.height
-}
-
-func (r Rectangle) perimeter() float64 {
-	return 2 * (r.width + r.height)
-}
-
-// Define the Circle struct
-type Circle struct {
-	radius float64
-}
-
-// Implement the Shape interface for Circle
-func (c Circle) area() float64 {
-	return 3.14 * c.radius * c.radius
-}
-
-func (c Circle) perimeter() float64 {
-	return 2 * 3.14 * c.radius
-}
-
-// Function to print area and perimeter of a shape
-func printShapeDetails(s Shape) {
-	fmt.Println("Area:", s.area())
-	fmt.Println("Perimeter:", s.perimeter())
+// Function to simulate another task and send data through a channel
+func task2(ch chan<- string) {
+	time.Sleep(1 * time.Second)
+	ch <- "Task 2 complete"
 }
 
 func main() {
-	// Create a rectangle and circle
-	rect := Rectangle{width: 10, height: 5}
-	circle := Circle{radius: 7}
+	// Create a channel to communicate between goroutines
+	ch := make(chan string)
 
-	// Print details for the rectangle
-	fmt.Println("Rectangle details:")
-	printShapeDetails(rect)
+	// Start two tasks as goroutines
+	go task1(ch)
+	go task2(ch)
 
-	// Print details for the circle
-	fmt.Println("Circle details:")
-	printShapeDetails(circle)
+	// Receive and print the messages from the tasks
+	msg1 := <-ch
+	fmt.Println(msg1)
 
+	msg2 := <-ch
+	fmt.Println(msg2)
+
+	fmt.Println("All tasks complete")
 }
