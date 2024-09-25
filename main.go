@@ -33,6 +33,13 @@ func submitHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func loggingMiddleware(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		log.Printf("%s %s", r.Method, r.URL.Path)
+		next.ServeHTTP(w, r)
+	})
+}
+
 // Start the server
 func main() {
 	// Serve the static files from the "static" directory
@@ -40,9 +47,9 @@ func main() {
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
 
 	// Define the route and corresponding handler function
-	http.HandleFunc("/", homeHandler)
-	http.HandleFunc("/about", aboutHandler)
-	http.HandleFunc("/submit", submitHandler)
+	http.Handle("/", loggingMiddleware(http.HandlerFunc(homeHandler)))
+	http.Handle("/about", loggingMiddleware(http.HandlerFunc(aboutHandler)))
+	http.Handle("/submit", loggingMiddleware(http.HandlerFunc(submitHandler)))
 
 	// Start the HTTP server
 	log.Println("Starting server on: 8080")
