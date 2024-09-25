@@ -4,20 +4,20 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"text/template"
 )
 
 // Handler function for the root route "/"
 func homeHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, `
-		<html>
-			<head>
-				<link rel="stylesheet" href="/static/style.css">
-			</head>
-			<body>
-				<h1>Welcome to the Go Web Server!</h1>
-			</body>
-		</html>
-	`)
+	tmpl, _ := template.ParseFiles("templates/home.html")
+	data := struct {
+		Title   string
+		Message string
+	}{
+		Title:   "Home Page",
+		Message: "Welcome to the home page",
+	}
+	tmpl.Execute(w, data)
 }
 
 func aboutHandler(w http.ResponseWriter, r *http.Request) {
